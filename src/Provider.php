@@ -17,7 +17,9 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     protected function getAuthUrl($state)
     {
-        return $this->buildAuthUrlFromBase('https://ssl.reddit.com/api/v1/authorize', $state);
+        return $this->buildAuthUrlFromBase(
+            'https://ssl.reddit.com/api/v1/authorize', $state
+        );
     }
 
     /**
@@ -33,7 +35,8 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     protected function getUserByToken($token)
     {
-        $response = $this->getHttpClient()->get('https://oauth.reddit.com/api/v1/me', [
+        $response = $this->getHttpClient()->get(
+            'https://oauth.reddit.com/api/v1/me', [
             'headers' => [
                 'Authorization' => 'bearer '.$token,
             ],
@@ -48,11 +51,8 @@ class Provider extends AbstractProvider implements ProviderInterface
     protected function mapUserToObject(array $user)
     {
         return (new User())->setRaw($user)->map([
-             'id'       => $user['id'],
-             'nickname' => $user['name'],
-             'name'     => null,
-             'email'    => null,
-             'avatar'   => null,
+            'id' => $user['id'], 'nickname' => $user['name'],
+            'name' => null, 'email' => null, 'avatar' => null,
         ]);
     }
 
@@ -63,8 +63,8 @@ class Provider extends AbstractProvider implements ProviderInterface
     {
         $response = $this->getHttpClient()->post($this->getTokenUrl(), [
             'headers' => ['Accept' => 'application/json'],
-            'auth'    => [$this->clientId, $this->clientSecret],
-            'body'    => $this->getTokenFields($code),
+            'auth' => [$this->clientId, $this->clientSecret],
+            'body' => $this->getTokenFields($code),
         ]);
 
         return $this->parseAccessToken($response->getBody());
@@ -76,8 +76,7 @@ class Provider extends AbstractProvider implements ProviderInterface
     protected function getTokenFields($code)
     {
         return [
-            'grant_type'   => 'authorization_code',
-            'code'         => $code,
+            'grant_type' => 'authorization_code', 'code' => $code,
             'redirect_uri' => $this->redirectUrl,
         ];
     }
