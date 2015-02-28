@@ -1,5 +1,11 @@
 # Reddit OAuth2 Provider for Laravel Socialite
 
+[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/SocialiteProviders/Reddit.svg?style=flat-square)](https://scrutinizer-ci.com/g/SocialiteProviders/Reddit/?branch=master)
+[![Latest Stable Version](https://img.shields.io/packagist/v/socialiteproviders/reddit.svg?style=flat-square)](https://packagist.org/packages/socialiteproviders/reddit)
+[![Total Downloads](https://img.shields.io/packagist/dt/socialiteproviders/reddit.svg?style=flat-square)](https://packagist.org/packages/socialiteproviders/reddit)
+[![Latest Unstable Version](https://img.shields.io/packagist/vpre/socialiteproviders/reddit.svg?style=flat-square)](https://packagist.org/packages/socialiteproviders/reddit)
+[![License](https://img.shields.io/packagist/l/socialiteproviders/reddit.svg?style=flat-square)](https://packagist.org/packages/socialiteproviders/reddit)
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 ## Contents
