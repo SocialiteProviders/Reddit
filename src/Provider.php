@@ -64,7 +64,7 @@ class Provider extends AbstractProvider implements ProviderInterface
         $response = $this->getHttpClient()->post($this->getTokenUrl(), [
             'headers' => ['Accept' => 'application/json'],
             'auth' => [$this->clientId, $this->clientSecret],
-            'body' => $this->getTokenFields($code),
+            'form_params' => $this->getTokenFields($code),
         ]);
 
         return $this->parseAccessToken($response->getBody());
