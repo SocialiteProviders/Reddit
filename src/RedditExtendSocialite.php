@@ -1,4 +1,5 @@
 <?php
+
 namespace SocialiteProviders\Reddit;
 
 use SocialiteProviders\Manager\SocialiteWasCalled;
