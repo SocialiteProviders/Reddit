@@ -1,6 +1,7 @@
 <?php
 namespace SocialiteProviders\Reddit;
 
+use GuzzleHttp\ClientInterface;
 use Laravel\Socialite\Two\AbstractProvider;
 use Laravel\Socialite\Two\ProviderInterface;
 use Laravel\Socialite\Two\User;
@@ -61,10 +62,12 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     public function getAccessToken($code)
     {
+        $postKey = (version_compare(ClientInterface::VERSION, '6') === 1) ? 'form_params' : 'body';
+
         $response = $this->getHttpClient()->post($this->getTokenUrl(), [
             'headers' => ['Accept' => 'application/json'],
             'auth' => [$this->clientId, $this->clientSecret],
-            'form_params' => $this->getTokenFields($code),
+            $postKey => $this->getTokenFields($code),
         ]);
 
         return $this->parseAccessToken($response->getBody());
