@@ -19,6 +19,11 @@ class Provider extends AbstractProvider implements ProviderInterface
     protected $scopes = ['identity'];
 
     /**
+     * @var string
+     */
+    protected $userAgent = '';
+
+    /**
      * {@inheritdoc}
      */
     protected function getAuthUrl($state)
@@ -41,11 +46,18 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     protected function getUserByToken($token)
     {
+        $headers = [
+            'Authorization' => 'Bearer '.$token,
+        ];
+
+        if ($this->userAgent != '')
+        {
+            $headers['User-Agent'] = $this->userAgent;
+        }
+
         $response = $this->getHttpClient()->get(
             'https://oauth.reddit.com/api/v1/me', [
-            'headers' => [
-                'Authorization' => 'Bearer '.$token,
-            ],
+            'headers' => $headers,
         ]);
 
         return json_decode($response->getBody()->getContents(), true);
@@ -67,8 +79,17 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     public function getAccessToken($code)
     {
+        $headers = [
+            'Accept' => 'application/json',
+        ];
+
+        if ($this->userAgent)
+        {
+            $headers['User-Agent'] = $this->userAgent;
+        }
+
         $response = $this->getHttpClient()->post($this->getTokenUrl(), [
-            'headers' => ['Accept' => 'application/json'],
+            'headers' => $headers,
             'auth' => [$this->clientId, $this->clientSecret],
             'form_params' => $this->getTokenFields($code),
         ]);
@@ -87,5 +108,15 @@ class Provider extends AbstractProvider implements ProviderInterface
             'grant_type' => 'authorization_code', 'code' => $code,
             'redirect_uri' => $this->redirectUrl,
         ];
+    }
+
+    /**
+     * Sets a custom user-agent header
+     *
+     * @param $userAgent
+     */
+    public function setUserAgent($userAgent)
+    {
+        $this->userAgent = $userAgent;
     }
 }
