@@ -45,6 +45,7 @@ class Provider extends AbstractProvider implements ProviderInterface
             'https://oauth.reddit.com/api/v1/me', [
             'headers' => [
                 'Authorization' => 'Bearer '.$token,
+                'User-Agent' => $this->getUserAgent()
             ],
         ]);
 
@@ -68,7 +69,10 @@ class Provider extends AbstractProvider implements ProviderInterface
     public function getAccessToken($code)
     {
         $response = $this->getHttpClient()->post($this->getTokenUrl(), [
-            'headers' => ['Accept' => 'application/json'],
+            'headers' => [
+                'Accept' => 'application/json',
+                'User-Agent' => $this->getUserAgent()
+            ],
             'auth' => [$this->clientId, $this->clientSecret],
             'form_params' => $this->getTokenFields($code),
         ]);
@@ -87,5 +91,25 @@ class Provider extends AbstractProvider implements ProviderInterface
             'grant_type' => 'authorization_code', 'code' => $code,
             'redirect_uri' => $this->redirectUrl,
         ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getUserAgent()
+    {
+        return implode(':', [
+            $this->getConfig('platform'),
+            $this->getConfig('app_id'),
+            $this->getConfig('version_string'),
+        ]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function additionalConfigKeys()
+    {
+        return ['platform', 'app_id', 'version_string'];
     }
 }
