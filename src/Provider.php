@@ -50,8 +50,7 @@ class Provider extends AbstractProvider implements ProviderInterface
             'Authorization' => 'Bearer '.$token,
         ];
 
-        if (!empty($this->userAgent))
-        {
+        if (!empty($this->userAgent)) {
             $headers['User-Agent'] = $this->userAgent;
         }
 
@@ -83,8 +82,7 @@ class Provider extends AbstractProvider implements ProviderInterface
             'Accept' => 'application/json',
         ];
 
-        if (!empty($this->userAgent))
-        {
+        if (!empty($this->userAgent)) {
             $headers['User-Agent'] = $this->userAgent;
         }
 
@@ -111,7 +109,7 @@ class Provider extends AbstractProvider implements ProviderInterface
     }
 
     /**
-     * Sets a custom user-agent header
+     * Sets a custom user-agent header.
      *
      * @param $userAgent
      */
