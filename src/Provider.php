@@ -66,7 +66,7 @@ class Provider extends AbstractProvider implements ProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function getAccessToken($code)
+    public function getAccessTokenResponse($code)
     {
         $response = $this->getHttpClient()->post($this->getTokenUrl(), [
             'headers' => [
@@ -79,7 +79,7 @@ class Provider extends AbstractProvider implements ProviderInterface
 
         $this->credentialsResponseBody = json_decode($response->getBody(), true);
 
-        return $this->parseAccessToken($response->getBody());
+        return $this->credentialsResponseBody;
     }
 
     /**
